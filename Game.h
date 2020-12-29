@@ -17,7 +17,7 @@ class game{
 		void stopGame();
 		void startGame();
 		status two_compare_pixel(map_node&,map_node&);//比較兩個map node的關係//
-		//void goat_move(int,int, int);//羊的移動//
+		void goat_action(map_node,direction);
 		void goat_move(map_node,map_node);//
 		void goat_eatgrass(map_node,map_node);//羊吃草
 		void grass_grow(map_node);//草生長
