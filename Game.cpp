@@ -63,9 +63,9 @@ void game::grass_grownewgrass(map_node *d_target){
 void game::goat_action(int height,int width,direction d){
 	int x = width;
 	int y = height;
-	switch(d){
-		case direction::UP:
-			if( game_map.nodes[y][x].getCLR() !=true && game_map.is_at_border(y, x, d)){
+	if( game_map.is_at_border(y, x, d)){
+		switch(d){
+			case direction::UP:
 				switch(two_compare_pixels(game_map.nodes[y][x],game_map.nodes[y+1][x])){
 					case status::GOAT_EMPTY:
 						if(game_map.nodes[y][x].getAge() >= 50 && game_map.nodes[y][x].getAge() <= 55){
@@ -82,11 +82,8 @@ void game::goat_action(int height,int width,direction d){
 						game_map.nodes[y+1][x].setPosition(x,y+1);
 						break;
 				}
-			}
-			game_map.nodes[y][x].getCLR() != false;
-			break;
-		case direction::DOWN:   
-			if(game_map.nodes[y][x].getCLR() !=true && game_map.is_at_border(y, x, d)){
+				break;
+			case direction::DOWN:   
 				switch(two_compare_pixels(game_map.nodes[y][x],game_map.nodes[y-1][x])){
 					case status::GOAT_EMPTY:
 						if(game_map.nodes[y][x].getAge() >= 50 && game_map.nodes[y][x].getAge() <= 55){
@@ -103,11 +100,8 @@ void game::goat_action(int height,int width,direction d){
 						game_map.nodes[y-1][x].setPosition(x,y-1);
 						break;
 				}
-			}
-			game_map.nodes[y][x].getCLR() != false;
-			break;
-		case direction::RIGHT:  
-			if(game_map.nodes[y][x].getCLR() !=true && game_map.is_at_border(y, x, d)){
+				break;
+			case direction::RIGHT:  
 				switch(two_compare_pixels(game_map.nodes[y][x],game_map.nodes[y][x+1])){
 					case status::GOAT_EMPTY:
 						if(game_map.nodes[y][x].getAge() >= 50 && game_map.nodes[y][x].getAge() <= 55){
@@ -124,11 +118,8 @@ void game::goat_action(int height,int width,direction d){
 						game_map.nodes[y][x+1].setPosition(x+1,y);
 						break;
 				}
-			}
-			game_map.nodes[y][x].getCLR() != false;
-			break;
-		case direction::LEFT:   
-			if(game_map.nodes[y][x].getCLR() !=true && game_map.is_at_border(y, x, d)){
+				break;
+			case direction::LEFT:   
 				switch(two_compare_pixels(game_map.nodes[y][x],game_map.nodes[y][x-1])){
 					case status::GOAT_EMPTY:
 						if(game_map.nodes[y][x].getAge() >= 50 && game_map.nodes[y][x].getAge() <= 55){
@@ -144,18 +135,17 @@ void game::goat_action(int height,int width,direction d){
 						goat_eatgrass(&(game_map.nodes[y][x]),&(game_map.nodes[y][x-1]));
 						game_map.nodes[y][x-1].setPosition(x-1,y);
 				}
-			}
-			game_map.nodes[y][x].getCLR() != false;
-			break;
+				break;
+		}
 	}
 }
 
 void game::grass_action(int height,int width,direction d){
 	int x = width;
 	int y = height;
-	switch(d){
-		case direction::UP:
-			if(game_map.nodes[y][x].getCLR() !=true && game_map.is_at_border(y, x, d)){
+	if(game_map.is_at_border(y, x, d)){
+		switch(d){
+			case direction::UP:
 				switch(two_compare_pixels(game_map.nodes[y][x],game_map.nodes[y+1][x])){
 					case status::GRASS_EMPTY:
 						if(game_map.nodes[y][x].getAge() >= 3 && game_map.nodes[y][x].getAge() <=5){
@@ -164,11 +154,8 @@ void game::grass_action(int height,int width,direction d){
 						}     
 						break;
 				}
-			}
-			game_map.nodes[y][x].getCLR() != false;
-			break;
-		case direction::DOWN:   
-			if(game_map.nodes[y][x].getCLR() !=true && game_map.is_at_border(y, x, d)){
+				break;
+			case direction::DOWN:   
 				switch(two_compare_pixels(game_map.nodes[y][x],game_map.nodes[y-1][x])){
 					case status::GRASS_EMPTY:       
 						if(game_map.nodes[y][x].getAge() >= 3 && game_map.nodes[y][x].getAge() <=5){
@@ -177,11 +164,8 @@ void game::grass_action(int height,int width,direction d){
 						}
 						break;
 				}
-			}
-			game_map.nodes[y][x].getCLR() != false;
-			break;
-		case direction::RIGHT:  
-			if(game_map.nodes[y][x].getCLR() !=true && game_map.is_at_border(y, x, d)){
+				break;
+			case direction::RIGHT:  
 				switch(two_compare_pixels(game_map.nodes[y][x],game_map.nodes[y][x+1])){
 					case status::GRASS_EMPTY:       
 						if(game_map.nodes[y][x].getAge() >= 3 && game_map.nodes[y][x].getAge() <=5){
@@ -190,11 +174,8 @@ void game::grass_action(int height,int width,direction d){
 						}
 						break;
 				}
-			}
-			game_map.nodes[y][x].getCLR() != false;
-			break;
-		case direction::LEFT:   
-			if(game_map.nodes[y][x].getCLR() !=true && game_map.is_at_border(y, x, d)){
+				break;
+			case direction::LEFT:   
 				switch(two_compare_pixels(game_map.nodes[y][x],game_map.nodes[y][x-1])){
 					case status::GRASS_EMPTY:       
 						if(game_map.nodes[y][x].getAge() >= 3 && game_map.nodes[y][x].getAge() <=5){
@@ -203,9 +184,8 @@ void game::grass_action(int height,int width,direction d){
 						}
 						break;
 				}
-			}
-			game_map.nodes[y][x].getCLR() != false;
-			break;
+				break;
+		}
 	}
 }
 
@@ -292,39 +272,42 @@ void game::RunGameOne(){
 
 	for(int y=0;y<Height;y++){
 		for(int x=0;x<Width;x++){
-			if(game_map.nodes[y][x].getFeature() == feature::GOAT){ 
-				switch((int)rand()%4+1){
-					case 1:
-						goat_action(y,x,direction::UP);
-						break;
-					case 2:
-						goat_action(y,x,direction::DOWN);
-						break;
-					case 3:
-						goat_action(y,x,direction::RIGHT);
-						break;
-					case 4:
-						goat_action(y,x,direction::LEFT);
-						break;			
+			if(game_map.nodes[y][x].getCLR()!=true){
+				if(game_map.nodes[y][x].getFeature() == feature::GOAT){ 
+					switch((int)rand()%4+1){
+						case 1:
+							goat_action(y,x,direction::UP);
+							break;
+						case 2:
+							goat_action(y,x,direction::DOWN);
+							break;
+						case 3:
+							goat_action(y,x,direction::RIGHT);
+							break;
+						case 4:
+							goat_action(y,x,direction::LEFT);
+							break;			
+					}
 				}
-			}
-			if(game_map.nodes[y][x].getFeature() == feature::GRASS){
-				switch(rand()%4+1){
-					case 1:
-						grass_action(y,x,direction::UP);
-						break;
-					case 2:
-						grass_action(y,x,direction::DOWN);
-						break;
-					case 3:
-						grass_action(y,x,direction::RIGHT);
-						break;
-					case 4:
-						grass_action(y,x,direction::LEFT);
-						break;			
-				}
+				if(game_map.nodes[y][x].getFeature() == feature::GRASS){
+					switch(rand()%4+1){
+						case 1:
+							grass_action(y,x,direction::UP);
+							break;
+						case 2:
+							grass_action(y,x,direction::DOWN);
+							break;
+						case 3:
+							grass_action(y,x,direction::RIGHT);
+							break;
+						case 4:
+							grass_action(y,x,direction::LEFT);
+							break;			
+					}
 
+				}
 			}
+			else game_map.nodes[y][x].setCLR(false);
 		}
 	}
 	for(int y=0;y<Height;y++){
