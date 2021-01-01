@@ -2,9 +2,36 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include <ostream>
+#define InitGoatNum 30
+#define InitGrassNum 30
 game::game(){;}
 game::~game(){;}
 
+namespace Color {
+    enum Code {
+        FG_RED      = 31,
+        FG_GREEN    = 32,
+        FG_BLUE     = 34,
+        FG_DEFAULT  = 39,
+	FG_WHITE    = 97,
+        BG_RED      = 41,
+        BG_GREEN    = 42,
+        BG_BLUE     = 44,
+        BG_DEFAULT  = 49,
+	BG_WHITE = 107,
+	BG_LIGHT_GREEN = 102
+    };
+    class Modifier {
+        Code code;
+    public:
+        Modifier(Code pCode) : code(pCode) {}
+        friend std::ostream&
+        operator<<(std::ostream& os, const Modifier& mod) {
+            return os << "\033[" << mod.code << "m";
+        }
+    };
+}
 status game::two_compare_pixels(map_node target,map_node d_target){
 	if(target.getFeature() == feature::GOAT && \
 			d_target.getFeature() == feature::EMPTY )
@@ -40,9 +67,9 @@ void game::goat_grownewgoat(map_node *target,map_node *d_target){
 	else{
 		target->setAge(target->getAge()+5);
 		d_target->setFeature(feature::GOAT);
-                d_target->setAge(1);
-                d_target->setLife(20);
-                d_target->setCLR(true);
+		d_target->setAge(1);
+		d_target->setLife(20);
+		d_target->setCLR(true);
 	}
 	return ;
 }
@@ -56,7 +83,6 @@ void game::goat_eatgrass(map_node *target,map_node *d_target){
 		target->setLife(20);
 		target->setFeature(feature::EMPTY);
 		d_target->setCLR(true);
-		//std::cout<<"eat grass"<<std::endl;
 	}
 	return ;
 }
@@ -201,42 +227,39 @@ void game::grass_action(int height,int width,direction d){
 
 void game::StartGame(){
 	srand( time( NULL) + 2000);
-	bool isEmpty[35*20];
-	for(int i=0;i<35*20;i++)isEmpty[i]=true;
+	bool isEmpty[Width*Height];
+	for(int i=0;i<Width*Height;i++)isEmpty[i]=true;
 	int pos;
-	pos= rand() %(35*20);
-	for(int i=0; i<5;){
+	pos= rand() %(Width*Height);
+	for(int i=0; i<InitGoatNum;){
 		if(isEmpty[pos]){
-			game_map.nodes[pos/35][pos%35].setFeature(feature::GOAT);
-			game_map.nodes[pos/35][pos%35].setPosition(pos%35,pos/35);
+			game_map.nodes[pos/Width][pos%Width].setFeature(feature::GOAT);
+			game_map.nodes[pos/Width][pos%Width].setPosition(pos%Width,pos/Width);
 			isEmpty[pos]=false;
 			i++;
 		}
-		else pos = rand()%(35*20); 
+		else pos = rand()%(Width*Height); 
 	}
-	pos= rand() %(35*20);
-	for(int i=0; i<10;){
+	pos= rand() %(Width*Height);
+	for(int i=0; i<InitGrassNum;){
 		if(isEmpty[pos]){
-			game_map.nodes[pos/35][pos%35].setFeature(feature::GRASS);
-			game_map.nodes[pos/35][pos%35].setPosition(pos%35,pos/35);
+			game_map.nodes[pos/Width][pos%Width].setFeature(feature::GRASS);
+			game_map.nodes[pos/Width][pos%Width].setPosition(pos%Width,pos/Width);
 			isEmpty[pos]=false;
 			i++;
 		}
-		else pos = rand()%(35*20); 
+		else pos = rand()%(Width*Height); 
 	}
-	/*
-	for(int y=0;y<Height;y++){
-		for(int x=0;x<Width;x++){
-			if(game_map.nodes[y][x].getFeature() == feature::GOAT)
-				std::cout<<game_map.nodes[y][x].getLife()<<" "<<game_map.nodes[y][x].getAge()<<" "<<\
-					game_map.nodes[y][x].getPositionX()+1<<" "<<game_map.nodes[y][x].getPositionY()+1<<std::endl;
-		}
-	}
-	std::cout<<std::endl;
-	*/
 }
 void game::ShowMap(){
-	for(int i =0 ;i<=35;i++)std::cout<<"--";
+	Color::Modifier def(Color::FG_DEFAULT);
+	Color::Modifier defBG(Color::BG_DEFAULT);
+	Color::Modifier Blue(Color::FG_BLUE);
+	Color::Modifier Green(Color::FG_GREEN);
+	Color::Modifier GreenBG(Color::BG_GREEN);
+	Color::Modifier WhiteBG(Color::BG_WHITE);
+	Color::Modifier LgreenBG(Color::BG_LIGHT_GREEN);
+	for(int i =0 ;i<=Width;i++)std::cout<<"--";
 	std::cout<<std::endl;
 	std::cout<<"  ";
 	for(int i=0;i<Width;i++){
@@ -248,13 +271,19 @@ void game::ShowMap(){
 		if((y+1)/10 == 0)std::cout<<y+1<<" ";
 		else std::cout<<y+1;
 		for(int x=0;x<Width;x++){
-			if(game_map.nodes[y][x].getFeature() == feature::GOAT) std::cout<<"X ";
-			if(game_map.nodes[y][x].getFeature() == feature::GRASS) std::cout<<"I ";	
-			if(game_map.nodes[y][x].getFeature() == feature::EMPTY) std::cout<<"  ";
+			if(game_map.nodes[y][x].getFeature() == feature::GOAT) 
+				if(game_map.nodes[y][x].getLife()/10 == 0)
+				std::cout<<WhiteBG<<Blue<<" "<<game_map.nodes[y][x].getLife()<<def<<defBG;
+				else if(game_map.nodes[y][x].getLife() < 99)
+				std::cout<<WhiteBG<<Blue<<game_map.nodes[y][x].getLife()<<def<<defBG;
+				else	
+				std::cout<<WhiteBG<<Blue<<"FF"<<def<<defBG;
+			if(game_map.nodes[y][x].getFeature() == feature::GRASS) std::cout<<LgreenBG<<Green<<"||"<<def<<defBG;
+			if(game_map.nodes[y][x].getFeature() == feature::EMPTY) std::cout<<GreenBG<<"  "<<defBG;
 		}
 		std::cout<<std::endl;
 	}
-	for(int i =0 ;i<=35;i++)std::cout<<"--";
+	for(int i =0 ;i<=Width;i++)std::cout<<"--";
 	std::cout<<std::endl;
 }
 void game::RunGameOne(){
@@ -270,7 +299,6 @@ void game::RunGameOne(){
 					game_map.nodes[y][x].setAge(1);
 					game_map.nodes[y][x].setLife(20);
 					game_map.nodes[y][x].setFeature(feature::EMPTY);
-					//std::cout<<"Dead"<<std::endl;
 				} 
 			}
 			if(game_map.nodes[y][x].getFeature()==feature::GRASS){
@@ -327,14 +355,4 @@ void game::RunGameOne(){
 			game_map.nodes[y][x].setCLR(false);
 		}
 	}
-	/*
-	for(int y=0;y<Height;y++){
-		for(int x=0;x<Width;x++){
-			if(game_map.nodes[y][x].getFeature() == feature::GOAT) 
-				std::cout<<game_map.nodes[y][x].getLife()<<" "<<game_map.nodes[y][x].getAge()<<" "<<\
-					game_map.nodes[y][x].getPositionX()+1<<" "<<game_map.nodes[y][x].getPositionY()+1<<std::endl;
-		}
-	}
-	std::cout<<std::endl;
-	*/
 }
