@@ -49,6 +49,7 @@ void game::goat_eatgrass(map_node *target,map_node *d_target){
 		d_target->setLife(d_target->getLife()+5);
 		target->setFeature(feature::EMPTY);
 		d_target->setClr(true);
+		std::cout<<"eat"<<std::endl;
 	}
 	else target->setClr(false);
 	return ;
@@ -67,7 +68,8 @@ void game::grass_grownewgrass(map_node *d_target){
 void game::goat_action(int height,int width,direction d){
 	int x = width;
 	int y = height;
-	if(game_map.nodes[y][x].getAge()<= 70){
+	if(game_map.nodes[y][x].getAge()<= 70 || game_map.nodes[y][x].getLife() > 0){
+		if(game_map.nodes[y][x].getCLR() == false) game_map.nodes[y][x].setLife(game_map.nodes[y][x].getLife()-1);
 		switch(d){
 			case direction::UP:
 				if(game_map.is_at_border(x, y, d)){
@@ -88,7 +90,6 @@ void game::goat_action(int height,int width,direction d){
 							break;
 					}
 				}
-				//minus life
 				break;
 			case direction::DOWN:   
 				if(game_map.is_at_border(x, y, d)){
@@ -111,7 +112,6 @@ void game::goat_action(int height,int width,direction d){
 					}
 				}
 				if(game_map.nodes[y-1][x].getCLR() == true) game_map.nodes[y-1][x].setClr(false);
-				//minus life
 				break;
 			case direction::RIGHT:  
 				if(game_map.is_at_border(x, y, d)){
@@ -133,7 +133,6 @@ void game::goat_action(int height,int width,direction d){
 							break;
 					}
 				}
-				//minus life
 				break;
 			case direction::LEFT:   
 				if(game_map.is_at_border(x, y, d)){
@@ -156,9 +155,9 @@ void game::goat_action(int height,int width,direction d){
 					}
 				}
 				if(game_map.nodes[y][x-1].getCLR() == true) game_map.nodes[y][x-1].setClr(false);
-				//minus life
 				break;
 		}
+		
 
 	}
 	else{ 
@@ -171,7 +170,7 @@ void game::goat_action(int height,int width,direction d){
 void game::grass_action(int height,int width,direction d){
 	int x = width;
 	int y = height;
-	if(game_map.nodes[y][x].getAge()<= 7){
+	if(game_map.nodes[y][x].getAge()<= 7 ){
 		switch(d){
 			case direction::UP:
 				if(game_map.is_at_border(x, y, d)){
@@ -318,6 +317,11 @@ void game::RunGameOne(){
 			}
 		}
 	}
+	for(int y=0;y<Height;y++){
+                for(int x=0;x<Width;x++){
+                        game_map.nodes[y][x].setClr(false);
+                }
+        }
 	for(int y=0;y<Height;y++){
 		for(int x=0;x<Width;x++){
 			if(game_map.nodes[y][x].getFeature() == feature::GOAT) 
