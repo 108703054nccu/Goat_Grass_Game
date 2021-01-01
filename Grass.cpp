@@ -1,4 +1,4 @@
 #include "Grass.h"
 
-//grass::grass(){}
-//grass::~grass(){}
+grass::grass():creature(){;}
+grass::~grass(){;}

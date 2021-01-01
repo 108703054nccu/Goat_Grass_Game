@@ -1,27 +1,15 @@
 #include "Goat.h"
 
-
-//goat::goat(string::name):creature(name);
-//goat::~goat();
-void goat::move(direction dcase){
-	switch(dcase){
-		case direction::UP:
-			position[0] += 1;
-			break;
-		case direction::DOWN:
-			position[0] -= 1;
-			break;
-		case direction::RIGHT:
-			position[1] += 1;
-			break;
-		case direction::LEFT:
-			position[1] -= 1;
-			break;
-	}
+goat::goat(){
+        Life = 20;
 }
-int goat::getLife(){return life;}
-void goat::addLife(){life+=5;}
-void goat::minusLife(){life-=5;}
+goat::~goat(){;}
+void goat::setLife(int l){
+        Life = l;
+}
+int goat::getLife(){
+        return Life;
+}
 
 
 

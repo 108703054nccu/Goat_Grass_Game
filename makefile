@@ -1,7 +1,5 @@
-game.out:main.o Creature.o Goat.o Grass.o Map.o Game.o
-	g++ -o game.out  main.o Creature.o Goat.o Grass.o Map.o Game.o
-main.o:main.cpp
-	g++ -c main.cpp
+game.out:Creature.o Goat.o Grass.o Map.o Game.o
+	g++ main.cpp -o game.out Creature.o Goat.o Grass.o Map.o Game.o
 Creature.o:Creature.cpp Creature.h
 	g++ -c Creature.cpp
 Goat.o:Goat.cpp Goat.h

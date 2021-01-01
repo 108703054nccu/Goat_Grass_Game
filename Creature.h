@@ -3,19 +3,18 @@
 
 
 class creature{
-	public:
-		creature();//non positioin//
-		creature(int*);//position//
-		~creature();//
-		void setPosition(int*);//
-		int *getPosition();//
-		void setAge(int &);//
-		int getAge();//
-		void addAge();//
-	protected:
-	private:
-		int *position;//position
-		int *age;
+        public:
+                creature();
+                ~creature();
+                void setPosition(int,int);
+                void setAge(int);
+                int getPositionX();
+                int getPositionY();
+                int getAge();
+        private:
+                int X;
+                int Y;
+                int Age;
 };
+#endif //CTREATURE
 
-#endif //CREATURE_H
