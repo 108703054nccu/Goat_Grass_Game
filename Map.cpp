@@ -38,7 +38,7 @@ void map_node::setLife(int l){
         return ;
 }
 
-void map_node::setClr(bool c){
+void map_node::setCLR(bool c){
 	node_clr = c;
 }
 feature map_node::getFeature(){

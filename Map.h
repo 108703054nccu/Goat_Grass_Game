@@ -23,7 +23,7 @@ class map_node{
                 void setPosition(int,int);
                 void setAge(int);
                 void setLife(int);
-                void setClr(bool);
+                void setCLR(bool);
                 int getPositionX();
                 int getPositionY();
                 int getAge();
