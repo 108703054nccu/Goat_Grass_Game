@@ -18,41 +18,56 @@ status game::two_compare_pixels(map_node target,map_node d_target){
 }
 
 void game::goat_move(map_node *target,map_node *d_target){
-	d_target->setFeature(feature::GOAT);
-	d_target->setAge(target->getAge());
-	d_target->setLife(target->getLife());
-	target->setFeature(feature::EMPTY);
-	d_target->setClr(true);
+	if(target->getCLR() != true){
+		d_target->setFeature(target->getFeature());
+		d_target->setAge(target->getAge());
+		d_target->setLife(target->getLife());
+		target->setAge(1);
+		target->setLife(20);
+		target->setFeature(feature::EMPTY);
+		d_target->setClr(true);
+		std::cout<<"Move"<<std::endl;
+	}
+	else target->setClr(false);
 	return ;
 }
 
 void game::goat_grownewgoat(map_node *d_target){
-	d_target->setFeature(feature::GOAT);
-	d_target->setAge(1);
-	d_target->setLife(20);
-	d_target->setClr(true);
+	if(d_target->getCLR() != true){
+		d_target->setFeature(feature::GOAT);
+		d_target->setAge(1);
+		d_target->setLife(20);
+		d_target->setClr(true);
+	}
+	else d_target->setClr(false);
 	return ;
 }
 
 void game::goat_eatgrass(map_node *target,map_node *d_target){
-	goat_move(target,d_target);
-	d_target->setLife(d_target->getLife()+5);
-	target->setFeature(feature::EMPTY);
-	d_target->setClr(true);
+	if(target->getCLR() != true){
+		goat_move(target,d_target);
+		d_target->setLife(d_target->getLife()+5);
+		target->setFeature(feature::EMPTY);
+		d_target->setClr(true);
+	}
+	else target->setClr(false);
 	return ;
 }
 
 void game::grass_grownewgrass(map_node *d_target){
-	d_target->setFeature(feature::GRASS);
-	d_target->setAge(1);
-	d_target->setClr(true);
+	if(d_target->getCLR() != true){
+		d_target->setFeature(feature::GRASS);
+		d_target->setAge(1);
+		d_target->setClr(true);
+	}
+	else d_target->setClr(false);
 	return ;
 }
 
 void game::goat_action(int height,int width,direction d){
 	int x = width;
 	int y = height;
-	if(game_map.nodes[y][x].getCLR()== false && game_map.nodes[y][x].getAge()<= 70){
+	if(game_map.nodes[y][x].getAge()<= 70){
 		switch(d){
 			case direction::UP:
 				if(game_map.is_at_border(x, y, d)){
@@ -68,7 +83,7 @@ void game::goat_action(int height,int width,direction d){
 							}
 							break;
 						case status::GOAT_GRASS:
-							goat_eatgrass(&(game_map.nodes[y][x]),&(game_map.nodes[y+1][x]));     
+							goat_eatgrass(&(game_map.nodes[y][x]),&(game_map.nodes[y+1][x]));	
 							game_map.nodes[y+1][x].setPosition(x,y+1);
 							break;
 					}
@@ -89,11 +104,13 @@ void game::goat_action(int height,int width,direction d){
 							}
 							break;
 						case status::GOAT_GRASS:
-							goat_eatgrass(&(game_map.nodes[y][x]),&(game_map.nodes[y-1][x]));     
+							goat_eatgrass(&(game_map.nodes[y][x]),&(game_map.nodes[y-1][x])); 
+							std::cout<<"eat"<<std::endl;	
 							game_map.nodes[y-1][x].setPosition(x,y-1);
 							break;
 					}
 				}
+				if(game_map.nodes[y-1][x].getCLR() == true) game_map.nodes[y-1][x].setClr(false);
 				//minus life
 				break;
 			case direction::RIGHT:  
@@ -110,7 +127,8 @@ void game::goat_action(int height,int width,direction d){
 							}
 							break;
 						case status::GOAT_GRASS:
-							goat_eatgrass(&(game_map.nodes[y][x]),&(game_map.nodes[y][x+1]));     
+							goat_eatgrass(&(game_map.nodes[y][x]),&(game_map.nodes[y][x+1]));    
+							std::cout<<"eat"<<std::endl;	
 							game_map.nodes[y][x+1].setPosition(x+1,y);
 							break;
 					}
@@ -131,30 +149,29 @@ void game::goat_action(int height,int width,direction d){
 							}
 							break;
 						case status::GOAT_GRASS:
-							goat_eatgrass(&(game_map.nodes[y][x]),&(game_map.nodes[y][x-1]));     
+							goat_eatgrass(&(game_map.nodes[y][x]),&(game_map.nodes[y][x-1]));  
+							std::cout<<"eat"<<std::endl;	
 							game_map.nodes[y][x-1].setPosition(x-1,y);
 							break;
 					}
 				}
+				if(game_map.nodes[y][x-1].getCLR() == true) game_map.nodes[y][x-1].setClr(false);
 				//minus life
 				break;
 		}
 
 	}
 	else{ 
-		if(game_map.nodes[y][x].getAge() > 70) {
-			game_map.nodes[y][x].setFeature(feature::EMPTY);
-			game_map.nodes[y][x].setAge(1);
-			game_map.nodes[y][x].setLife(20);
-		}
-		game_map.nodes[y][x].setClr(false);
+		game_map.nodes[y][x].setFeature(feature::EMPTY);
+		game_map.nodes[y][x].setAge(1);
+		game_map.nodes[y][x].setLife(20);
 	}
 }
 
 void game::grass_action(int height,int width,direction d){
 	int x = width;
 	int y = height;
-	if(game_map.nodes[y][x].getCLR()== false && game_map.nodes[y][x].getAge()<= 7){
+	if(game_map.nodes[y][x].getAge()<= 7){
 		switch(d){
 			case direction::UP:
 				if(game_map.is_at_border(x, y, d)){
@@ -181,6 +198,7 @@ void game::grass_action(int height,int width,direction d){
 							break;
 					}
 				}
+				if(game_map.nodes[y-1][x].getCLR() == true) game_map.nodes[y-1][x].setClr(false);
 				break;
 			case direction::RIGHT:  
 				if(game_map.is_at_border(x, y, d)){
@@ -207,15 +225,13 @@ void game::grass_action(int height,int width,direction d){
 							break;
 					}
 				}
+				if(game_map.nodes[y-1][x].getCLR() == true) game_map.nodes[y-1][x].setClr(false);
 				break;
 		}
 	}
 	else{
-		if(game_map.nodes[y][x].getAge()> 7){
-		       	game_map.nodes[y][x].setFeature(feature::EMPTY);
-			game_map.nodes[y][x].setAge(1);
-		}
-		else game_map.nodes[y][x].setClr(false);
+		game_map.nodes[y][x].setFeature(feature::EMPTY);
+		game_map.nodes[y][x].setAge(1);
 	}
 }
 void game::StartGame(){
@@ -300,13 +316,14 @@ void game::RunGameOne(){
 				}
 
 			}
-			game_map.nodes[y][x].setAge(game_map.nodes[y][x].getAge()+1);
 		}
 	}
 	for(int y=0;y<Height;y++){
 		for(int x=0;x<Width;x++){
 			if(game_map.nodes[y][x].getFeature() == feature::GOAT) 
-				std::cout<<game_map.nodes[y][x].getLife()<<std::endl;
+				std::cout<<game_map.nodes[y][x].getLife()<<" "<<game_map.nodes[y][x].getAge()<<" "<<\
+					game_map.nodes[y][x].getPositionX()+1<<" "<<game_map.nodes[y][x].getPositionY()+1<<std::endl;
 		}
 	}
+	std::cout<<std::endl;
 }
