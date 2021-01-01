@@ -19,7 +19,7 @@ status game::two_compare_pixels(map_node target,map_node d_target){
 
 void game::goat_move(map_node *target,map_node *d_target){
 	if(target->getCLR() != true){
-		d_target->setFeature(target->getFeature());
+		d_target->setFeature(feature::GOAT);
 		d_target->setAge(target->getAge());
 		d_target->setLife(target->getLife());
 		target->setAge(1);
@@ -30,33 +30,43 @@ void game::goat_move(map_node *target,map_node *d_target){
 	return ;
 }
 
-void game::goat_grownewgoat(map_node *d_target){
-	d_target->setFeature(feature::GOAT);
-	d_target->setAge(1);
-	d_target->setLife(20);
-	d_target->setCLR(true);
+void game::goat_grownewgoat(map_node *target,map_node *d_target){
+	if(d_target->getFeature() == feature::EMPTY){
+		d_target->setFeature(feature::GOAT);
+		d_target->setAge(1);
+		d_target->setLife(20);
+		d_target->setCLR(true);
+	}
+	else{
+		target->setAge(target->getAge()+5);
+		d_target->setFeature(feature::GOAT);
+                d_target->setAge(1);
+                d_target->setLife(20);
+                d_target->setCLR(true);
+	}
 	return ;
 }
 
 void game::goat_eatgrass(map_node *target,map_node *d_target){
 	if(target->getCLR() != true){
-		d_target->setFeature(target->getFeature());
+		d_target->setFeature(feature::GOAT);
 		d_target->setAge(target->getAge());
-		d_target->setLife(target->getLife());
+		d_target->setLife(target->getLife()+5);
 		target->setAge(1);
 		target->setLife(20);
 		target->setFeature(feature::EMPTY);
-		d_target->setLife(d_target->getLife()+5);
 		d_target->setCLR(true);
-		std::cout<<"eat grass"<<std::endl;
+		//std::cout<<"eat grass"<<std::endl;
 	}
 	return ;
 }
 
 void game::grass_grownewgrass(map_node *d_target){
-	d_target->setFeature(feature::GRASS);
-	d_target->setAge(1);
-	d_target->setCLR(true);
+	if(d_target->getFeature() == feature::EMPTY){
+		d_target->setFeature(feature::GRASS);
+		d_target->setAge(1);
+		d_target->setCLR(true);
+	}
 	return ;
 }
 
@@ -69,7 +79,7 @@ void game::goat_action(int height,int width,direction d){
 				switch(two_compare_pixels(game_map.nodes[y][x],game_map.nodes[y+1][x])){
 					case status::GOAT_EMPTY:
 						if(game_map.nodes[y][x].getAge() >= 50 && game_map.nodes[y][x].getAge() <= 55){
-							goat_grownewgoat(&(game_map.nodes[y+1][x]));
+							goat_grownewgoat(&(game_map.nodes[y][x]),&(game_map.nodes[y+1][x]));
 							game_map.nodes[y+1][x].setPosition(x,y+1);
 						}
 						else{ 
@@ -87,7 +97,7 @@ void game::goat_action(int height,int width,direction d){
 				switch(two_compare_pixels(game_map.nodes[y][x],game_map.nodes[y-1][x])){
 					case status::GOAT_EMPTY:
 						if(game_map.nodes[y][x].getAge() >= 50 && game_map.nodes[y][x].getAge() <= 55){
-							goat_grownewgoat(&(game_map.nodes[y-1][x]));
+							goat_grownewgoat(&(game_map.nodes[y][x]),&(game_map.nodes[y-1][x]));
 							game_map.nodes[y-1][x].setPosition(x,y-1);
 						}
 						else{  	
@@ -105,7 +115,7 @@ void game::goat_action(int height,int width,direction d){
 				switch(two_compare_pixels(game_map.nodes[y][x],game_map.nodes[y][x+1])){
 					case status::GOAT_EMPTY:
 						if(game_map.nodes[y][x].getAge() >= 50 && game_map.nodes[y][x].getAge() <= 55){
-							goat_grownewgoat(&(game_map.nodes[y][x+1]));
+							goat_grownewgoat(&(game_map.nodes[y][x]),&(game_map.nodes[y][x+1]));
 							game_map.nodes[y][x+1].setPosition(x+1,y);
 						}
 						else{  	
@@ -123,7 +133,7 @@ void game::goat_action(int height,int width,direction d){
 				switch(two_compare_pixels(game_map.nodes[y][x],game_map.nodes[y][x-1])){
 					case status::GOAT_EMPTY:
 						if(game_map.nodes[y][x].getAge() >= 50 && game_map.nodes[y][x].getAge() <= 55){
-							goat_grownewgoat(&(game_map.nodes[y][x-1]));
+							goat_grownewgoat(&(game_map.nodes[y][x]),&(game_map.nodes[y][x-1]));
 							game_map.nodes[y][x-1].setPosition(x-1,y);
 						}
 						else{  	
@@ -214,6 +224,7 @@ void game::StartGame(){
 		}
 		else pos = rand()%(35*20); 
 	}
+	/*
 	for(int y=0;y<Height;y++){
 		for(int x=0;x<Width;x++){
 			if(game_map.nodes[y][x].getFeature() == feature::GOAT)
@@ -222,6 +233,7 @@ void game::StartGame(){
 		}
 	}
 	std::cout<<std::endl;
+	*/
 }
 void game::ShowMap(){
 	for(int i =0 ;i<=35;i++)std::cout<<"--";
@@ -258,7 +270,7 @@ void game::RunGameOne(){
 					game_map.nodes[y][x].setAge(1);
 					game_map.nodes[y][x].setLife(20);
 					game_map.nodes[y][x].setFeature(feature::EMPTY);
-					std::cout<<"Dead"<<std::endl;
+					//std::cout<<"Dead"<<std::endl;
 				} 
 			}
 			if(game_map.nodes[y][x].getFeature()==feature::GRASS){
@@ -315,6 +327,7 @@ void game::RunGameOne(){
 			game_map.nodes[y][x].setCLR(false);
 		}
 	}
+	/*
 	for(int y=0;y<Height;y++){
 		for(int x=0;x<Width;x++){
 			if(game_map.nodes[y][x].getFeature() == feature::GOAT) 
@@ -323,4 +336,5 @@ void game::RunGameOne(){
 		}
 	}
 	std::cout<<std::endl;
+	*/
 }
