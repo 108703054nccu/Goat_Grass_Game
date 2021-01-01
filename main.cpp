@@ -5,7 +5,7 @@ int main(){
 	this_game.StartGame();
 	this_game.ShowMap();
 	std::cout<<"------------------------------------------"<<std::endl;
-	for(int i = 0;i<20;i++)this_game.RunGameOne();
+	for(int i = 0;i<2;i++)this_game.RunGameOne();
 	this_game.ShowMap();
 	return 0;
 }

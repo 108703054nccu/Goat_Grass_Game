@@ -85,16 +85,16 @@ map::~map(){;}
 bool map::is_at_border(int height,int width,direction d){
         switch(d){
                 case direction::UP:
-                        if(height+1 <= Height)return true;
+                        if(height+1 < Height)return true;
                         else return false;
                 case direction::DOWN:
-                        if(height-1 <= Height)return true;
+                        if(height-1 >= 0)return true;
                         else return false;
                 case direction::RIGHT:
-                        if(width+1 <= Width)return true;
+                        if(width+1 < Width)return true;
                         else return false;
                 case direction::LEFT:
-                        if(width-1 <= Width)return true;
+                        if(width-1 >= 0)return true;
                         else return false;
         }
 }
