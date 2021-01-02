@@ -8,7 +8,7 @@ int main(){
 	this_game.ShowMap();
 	sleep(1);
 	std::cout<<std::string ( 1000, '\n');
-	for(int i = 0;i<300;i++){
+	while(1){
 		this_game.RunGameOne();
 		this_game.ShowMap();
 		sleep(1);

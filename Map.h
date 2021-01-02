@@ -1,7 +1,7 @@
 #ifndef MAP_H
 #define MAP_H
-#define Height 50
-#define Width 50
+#define Height 40
+#define Width 40
 #include "Goat.h"
 #include "Grass.h"
 enum feature{

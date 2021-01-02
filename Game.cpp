@@ -3,8 +3,6 @@
 #include <ctime>
 #include <iostream>
 #include <ostream>
-#define InitGoatNum 30
-#define InitGrassNum 30
 game::game(){;}
 game::~game(){;}
 
@@ -226,6 +224,17 @@ void game::grass_action(int height,int width,direction d){
 }
 
 void game::StartGame(){
+	int InitGoatNum,InitGrassNum ;
+	Color::Modifier def(Color::FG_DEFAULT);
+        Color::Modifier defBG(Color::BG_DEFAULT);
+	Color::Modifier Blue(Color::FG_BLUE);
+	Color::Modifier WhiteBG(Color::BG_WHITE);
+	std::cout<<WhiteBG<<Blue<<"Now,Goat number:"<<def<<defBG;
+	std::cin>>InitGoatNum;
+	std::cout<<WhiteBG<<Blue<<"Now,Grass number:"<<def<<defBG;
+	std::cin>>InitGrassNum;
+	if(InitGoatNum>=100||InitGoatNum<0)InitGoatNum = 50;
+	if(InitGrassNum>=100||InitGrassNum<0)InitGrassNum = 50;
 	srand( time( NULL) + 2000);
 	bool isEmpty[Width*Height];
 	for(int i=0;i<Width*Height;i++)isEmpty[i]=true;
