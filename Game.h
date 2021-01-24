@@ -1,6 +1,17 @@
 #ifndef GMAE_H
 #define GAME_H
 #include "Map.h"
+#include "ColorGenerator.h"
+#include <cstdlib>
+#include <ctime>
+#include <iostream>
+#include <ostream>
+#include <unistd.h>
+#include <string>
+#include <thread>
+#include <chrono>             
+#include <mutex>              
+#include <condition_variable> 
 enum status{
         GRASS_EMPTY,
         GOAT_EMPTY,
@@ -20,7 +31,11 @@ class game{
                 void RunGameOne();
                 void StartGame();
                 void ShowMap();
+		void GameExecute();
+		void ChangeCommand();
         private:
                 map game_map;
+		std::condition_variable cv;
+		int value;
 };
 #endif //GAME_H
