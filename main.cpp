@@ -1,9 +1,8 @@
-#include "Game.h"
 #include<iostream>
 #include<string>
-
+#include "Game.h"
 int main(){
-	game this_game;
-	this_game.GameExecute();
+	game this_G;
+	this_G.GameMainExe();
 	return 0;
 }

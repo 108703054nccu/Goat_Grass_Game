@@ -1,8 +1,8 @@
 #ifndef GOAT_H
 #define GOAT_H
-#include "Creature.h"
+#include "Animal.h"
 
-class goat:public creature{
+class goat:public animal{
         public:
                 goat();
                 ~goat();

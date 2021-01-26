@@ -30,6 +30,7 @@ class map_node{
                 int getLife();
                 bool getCLR();
                 feature getFeature();
+		void nodeclear();
         private:
                 goat goat_pixel;
                 grass grass_pixel;

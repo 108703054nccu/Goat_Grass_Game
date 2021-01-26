@@ -3,15 +3,15 @@
 #include "Creature.h"
 #include <string>
 #include <iostream>
-class animal:public creatrue{
+class animal:public creature{
 	private:
-		string Name;
+		std::string Name;
 		int Power;
 	public:
 		animal();
 		~animal();
 		void set(std::string,int);
-		virtual std::string animal::getName();
+		virtual std::string getName();
 		virtual int getPower();
 		virtual int getAttack();
 };

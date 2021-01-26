@@ -41,6 +41,17 @@ void map_node::setLife(int l){
 void map_node::setCLR(bool c){
 	node_clr = c;
 }
+
+void map_node::nodeclear(){
+	if(node_pixel == 1){
+		goat_pixel.setAge(0);
+		goat_pixel.setLife(0);
+	}
+        if(node_pixel == 2)
+		grass_pixel.setAge(0);
+	node_pixel = 0;
+	node_clr = false;
+}
 feature map_node::getFeature(){
         switch(node_pixel){
                 case 0:
@@ -74,12 +85,12 @@ int map_node::getLife(){
 bool map_node::getCLR(){
 	return node_clr;
 }
+
 map::map(){
 	for(int i=0;i<Height;i++)
 		for(int j=0;j<Width;j++)
 			nodes[i][j].setFeature(feature::EMPTY);
 }
-
 map::~map(){;}
 
 bool map::is_at_border(int height,int width,direction d){

@@ -1,5 +1,5 @@
 #include "Animal.h"
-animal::animal(){
+animal::animal():creature(){
 	Name = "";
 	Power = 0;	
 }
@@ -8,13 +8,13 @@ void animal::set(std::string n,int p){
 	Name = n;
 	Power = p;
 }
-virtual std::string animal::getName(){
+std::string animal::getName(){
 	return Name;
 }
-virtual int animal::getPower(){
+int animal::getPower(){
 	return Power;
 }
-virtual int animal::getAttack(){
-	return 10*Age+Power;
+int animal::getAttack(){
+	return 10*getAge()+Power;
 }
 
