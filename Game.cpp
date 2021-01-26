@@ -1,12 +1,18 @@
 #include "Game.h"
 #include <iostream>
 #include <string>
+#include <unistd.h>
 game::game(){
 	command = 1;
 	isgamestart = false;
 }
 game::~game(){;}
 void game::StartGame(){
+	system("clear");
+	GameKernal.allclear();
+	std::cout<<"Now, it is empty"<<std::endl;
+	GameKernal.ShowMap();
+	sleep(1);
 	system("clear");
 	GameKernal.setCreaturesNum();
 	GameKernal.GameInitalize();
@@ -30,10 +36,12 @@ void game::CommandExe(){
 	while(std::cin>>commands){
 		if(commands == "3"){
 			command = 3;
+			commands.clear();
 			break;
 		}
 		else if(commands == "2"){
 			command = 2;
+			commands.clear();
 			break;
 		}
 		else{
@@ -46,7 +54,7 @@ void game::CommandExe(){
 void game::GameExe(){
 	std::unique_lock<std::mutex> lck(GameExetx);
 	std::thread Commandth(&game::CommandExe,this);
-	while(GameExecv.wait_for(lck, std::chrono::milliseconds(100)) == \
+	while(GameExecv.wait_for(lck, std::chrono::milliseconds(400)) == \
 			std::cv_status::timeout || \
 			command == 1){
 		system("clear");
