@@ -40,7 +40,7 @@ Now, this is the new commit
   
 ![Result of game, Enter Creature data](./Result_Picture/Enter_Data.png)  
   
-![Result of game, GameExecute](./Result_Picture/Game_Execute.png)  
+![Result of game, GameExecute](./Result_Picture/GameExecute.png)  
   
 ![Result video of new commit](./Result_Video/Second_Commit.mp4)
 
