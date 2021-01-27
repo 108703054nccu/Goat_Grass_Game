@@ -16,11 +16,11 @@ In this game, you can create creatures in this world.
   
 And you can enter these commands to control this game,  
   
-1. Continue this game  
+1: Continue this game  
   
-2. Restart this game   
+2: Restart this game   
   
-3. Quit this game 
+3: Quit this game 
   
 Finally, you can observe What happen in this world.  
   
