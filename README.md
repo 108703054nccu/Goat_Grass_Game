@@ -36,11 +36,11 @@ The lastest Commit
 Now, this is the new commit   
 (add CommandIO, can enter Command in any time)  
 
-![Result of game, it's empty now](./Result/World_Empty.png)  
+![Result of game, it's empty now](./Result_Picture/World_Empty.png)  
   
-![Result of game, Enter Creature data](./Result/Enter_Data.png)  
+![Result of game, Enter Creature data](./Result_Picture/Enter_Data.png)  
   
-![Result of game, GameExecute](./Result/Game_Execute.png)  
+![Result of game, GameExecute](./Result_Picture/Game_Execute.png)  
   
 ![Result video of new commit](./Result_Video/Second_Commit.mp4)
 
