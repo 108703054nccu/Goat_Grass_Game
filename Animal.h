@@ -9,7 +9,7 @@ class animal:public creature{
 		int Power;
 	public:
 		animal();
-		~animal();
+		virtual ~animal();
 		void set(std::string,int);
 		virtual std::string getName();
 		virtual int getPower();

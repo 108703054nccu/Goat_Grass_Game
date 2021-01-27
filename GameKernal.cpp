@@ -10,6 +10,8 @@ static Color::Modifier LgreenBG(Color::BG_LIGHT_GREEN);
 gamekernal::gamekernal(){
 	InitGoatNum = 0;
 	InitGrassNum = 0;
+	Goat_Num = 0;
+	Grass_Num = 0;
 }
 gamekernal::~gamekernal(){;}
 
@@ -232,6 +234,8 @@ void gamekernal::setCreaturesNum(){
 	std::cin>>InitGrassNum;
 	if(InitGoatNum>=100||InitGoatNum<0)InitGoatNum = 50;
 	if(InitGrassNum>=100||InitGrassNum<0)InitGrassNum = 50;
+	Goat_Num = InitGoatNum;
+	Grass_Num = InitGrassNum;
 	return ;
 }
 void gamekernal::GameInitalize(){
@@ -261,22 +265,32 @@ void gamekernal::GameInitalize(){
 	}
 }
 void gamekernal::ShowMap(){
+	int Now_Goat = 0;
+	int Now_Grass = 0;
 	for(int y=0;y<Height;y++){
 		for(int x=0;x<Width;x++){
-			if(game_map.nodes[y][x].getFeature() == feature::GOAT) 
+			if(game_map.nodes[y][x].getFeature() == feature::GOAT){
+				Now_Goat++;
 				if(game_map.nodes[y][x].getLife()/10 == 0)
 					std::cout<<WhiteBG<<Blue<<" "<<game_map.nodes[y][x].getLife()<<def<<defBG;
 				else if(game_map.nodes[y][x].getLife() < 99)
 					std::cout<<WhiteBG<<Blue<<game_map.nodes[y][x].getLife()<<def<<defBG;
 				else	
 					std::cout<<WhiteBG<<Blue<<"FF"<<def<<defBG;
-			if(game_map.nodes[y][x].getFeature() == feature::GRASS) 
+			}
+			if(game_map.nodes[y][x].getFeature() == feature::GRASS){
+				Now_Grass++;
 				std::cout<<LgreenBG<<Green<<"||"<<def<<defBG;
+			}
 			if(game_map.nodes[y][x].getFeature() == feature::EMPTY) 
 				std::cout<<GreenBG<<"  "<<defBG;
 		}
 		std::cout<<std::endl;
 	}
+	std::cout<<WhiteBG<<Blue<<"Now Goat :"<<Now_Goat<<def<<defBG<<std::endl;
+	std::cout<<WhiteBG<<Blue<<"Now Grass :"<<Now_Grass<<def<<defBG<<std::endl;
+	Goat_Num = Now_Goat;
+	Grass_Num = Now_Grass;
 }
 void gamekernal::GameOneRun(){
 	srand( time( NULL)+ 2000);

@@ -1,26 +1,33 @@
-game.out:ColorGenerator.o Creature.o Animal.o Lion.o Snake.o Goat.o Grass.o Map.o GameKernal.o Game.o CommandIO.o
-	g++ -std=c++11 main.cpp -o game.out -pthread ColorGenerator.o Creature.o Animal.o Lion.o Snake.o Goat.o Grass.o Map.o GameKernal.o CommandIO.o Game.o
-ColorGenerator.o:ColorGenerator.cpp ColorGenerator.h
-	g++ -c ColorGenerator.cpp 
-Creature.o:Creature.cpp Creature.h
-	g++ -c Creature.cpp 
-Animal.o:Animal.cpp Animal.h
-	g++ -c Animal.cpp 
-Goat.o:Goat.cpp Goat.h
-	g++ -c Goat.cpp
-Lion.o:Lion.cpp Lion.h
-	g++ -c Lion.cpp
-Snake.o:Snake.cpp Snake.h
-	g++ -c Snake.cpp
-Grass.o:Grass.cpp Grass.h
-	g++ -c Grass.cpp
-Map.o:Map.cpp Map.h
-	g++ -c Map.cpp
-GameKernal.o:GameKernal.cpp GameKernal.h
-	g++ -c GameKernal.cpp
-CommandIO.o:CommandIO.cpp CommandIO.h
-	g++ -c CommandIO.cpp
-Game.o:Game.cpp Game.h
-	g++ -std=c++11 -c Game.cpp -pthread
+OBJECTS= ColorGenerator.o Creature.o Animal.o Lion.o Snake.o Goat.o Grass.o Map.o GameKernal.o CommandIO.o Game.o
+CERROR= complieError.txt
+THREAD= -pthread
+C++11= -std=c++11
+game.out:$(OBJECTS)
+	g++ $(C++11) main.cpp -o game.out $(THREAD) $(OBJECTS) 2>>$(CERROR)
+	rm -f *.o
+ColorGenerator.o:ColorGenerator.h
+	rm -f $(CERROR)
+	g++ $(C++11) -c ColorGenerator.cpp  2>>$(CERROR)
+Creature.o:Creature.h
+	g++ $(C++11) -c Creature.cpp  2>>$(CERROR)
+Animal.o:Animal.h
+	g++ $(C++11) -c Animal.cpp  2>>$(CERROR)
+Goat.o:Goat.h
+	g++ $(C++11) -c Goat.cpp  2>>$(CERROR)
+Lion.o:Lion.h
+	g++ $(C++11) -c Lion.cpp  2>>$(CERROR)
+Snake.o:Snake.h
+	g++ $(C++11) -c Snake.cpp  2>>$(CERROR)
+Grass.o:Grass.h
+	g++ $(C++11) -c Grass.cpp  2>>$(CERROR)
+Map.o:Map.h
+	g++ $(C++11) -c Map.cpp  2>>$(CERROR)
+GameKernal.o:GameKernal.h
+	g++ $(C++11) -c GameKernal.cpp  2>>$(CERROR)
+CommandIO.o:CommandIO.h
+	g++ $(C++11) -c CommandIO.cpp  2>>$(CERROR)
+Game.o:Game.h
+	g++ $(C++11) -c Game.cpp $(THREAD) 2>>$(CERROR)
+.PHONY: clean
 clean:
-	rm -f game.out main.o ColorGenerator.o Creature.o Animal.o Goat.o Snake.o Lion.o Grass.o Map.o GameKernal.o CommandIO.o Game.o
+	rm -f *.out $(CERROR) 

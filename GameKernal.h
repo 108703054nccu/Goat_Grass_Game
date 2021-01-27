@@ -32,6 +32,7 @@ class gamekernal{
                 map game_map;
 		int InitGoatNum;
 		int InitGrassNum ;
-
+		int Goat_Num;
+		int Grass_Num;
 };
 #endif //GAMEKERNAL_H
