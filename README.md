@@ -1,13 +1,16 @@
-## Goat Grass Game    
+# Goat Grass Game    
   
-# Introduction  
+## Introduction  
   
 Every Goat eats Grass.  
+  
 They can have a goog afternoon.  
+  
 Sometimes we can add some evil animals.  
+  
 Let us see what happen on this place.  
   
-# Now, You can start this game  
+## Now, You can start this game  
   
 In this game, you can create creatures in this world.  
   
@@ -25,7 +28,7 @@ And tell me how many creatures in this world,
   
 It must be so fun.  
   
-# All interfaces of Game  
+## All interfaces of Game  
   
 The lastest Commit  
 (no add CommandIO)  
@@ -45,6 +48,6 @@ Now, this is the new commit
 ![Result video of new commit](./Result_Video/Second_Commit.mp4)
 
 
-# Author in this game  
+## Author in this game  
 吳昀倫(Code Maker)  
 
